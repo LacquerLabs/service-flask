@@ -1,7 +1,7 @@
 FROM alpine:3.6
 
 # Set the timezone
-ENV TIMEZONE            America/New_York
+ENV TIMEZONE=America/New_York
 
 # Load ash profile on launch
 ENV ENV="/etc/profile"
