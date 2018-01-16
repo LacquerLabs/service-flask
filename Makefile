@@ -1,24 +1,29 @@
 .DEFAULT_GOAL := help
 
-VERSION = 0.0.1
-NAME = flaskapp
-PORT_INTERNAL = 80
-PORT_EXTERNAL = 8080
+ORG = lacquerlabs
+NAME = service-flask
+IMAGE = $(ORG)/$(NAME)
+VERSION = 2.0.0
+PORT_INT = 80
+PORT_EXT = 8080
 
 build: ## Build it
-	docker build --pull -t $(NAME) .
+	docker build --pull -t $(IMAGE) .
 
 buildnocache: ## Build it without using cache
-	docker build --pull -t $(NAME) --no-cache .
+	docker build --pull -t $(IMAGE) --no-cache .
+
+tag: ## Tag it with $(VERSION)
+	docker tag $(IMAGE):latest $(IMAGE):$(VERSION)
 
 run: ## run it -v ${PWD}/code:/app/code
-	docker run -p $(PORT_EXTERNAL):$(PORT_INTERNAL) --name $(NAME)_run --rm -id $(NAME)
+	docker run -p $(PORT_EXTERNAL):$(PORT_INTERNAL) --name $(NAME)_run --rm -id $(IMAGE)
 
 runvolume: ## run it with code volume attached
-	docker run -p $(PORT_EXTERNAL):$(PORT_INTERNAL) --name $(NAME)_run -v ${PWD}/code:/app --rm -id $(NAME)
+	docker run -p $(PORT_EXTERNAL):$(PORT_INTERNAL) --name $(NAME)_run -v ${PWD}/code:/app --rm -id $(IMAGE)
 
 runshell: ## run the container with an interactive shell
-	docker run -p $(PORT_EXTERNAL):$(PORT_INTERNAL) --name $(NAME)_run --rm -it $(NAME) /bin/sh
+	docker run -p $(PORT_EXTERNAL):$(PORT_INTERNAL) --name $(NAME)_run --rm -it $(IMAGE) /bin/sh
 
 connect: ## connect to it
 	docker exec -it $(NAME)_run /bin/sh
@@ -29,7 +34,10 @@ watchlog: ## connect to it
 kill: ## kill it
 	docker kill $(NAME)_run
 
-it: build run connect kill ## do it all
+release: tag ## Create and push release to docker hub
+	@if ! docker images $(IMAGE) | awk '{ print $$2 }' | grep -q -F $(VERSION); then echo "$(NAME) version $(VERSION) is not yet built. Please run 'make build'"; false; fi
+	docker push $(IMAGE)
+	@echo "*** Don't forget to create a tag. git tag rel-$(VERSION) && git push origin rel-$(VERSION)"
 
 .PHONY: help
 

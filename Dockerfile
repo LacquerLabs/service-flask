@@ -62,5 +62,5 @@ EXPOSE 80
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]
 
 # what we use to start the container
-# Gunicorn Bind to 127.0.0.1:9292, 10 workers, reload on code change
+# Gunicorn Bind to 127.0.0.1:9292, 4 workers, reload on code change
 CMD ["/bin/sh", "-c", "nginx -g \"daemon on;\" && gunicorn -b 127.0.0.1:9292 -w 4 --reload main:app"]
