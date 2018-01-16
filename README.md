@@ -1,5 +1,5 @@
 # service-flask
-Quick and dirty nginx/gunicorn/python2 docker image
+Quick and dirty nginx => gunicorn => python2/flask docker image based on alpine 3.6
 
 ## Assumptions
 - you have docker installed
