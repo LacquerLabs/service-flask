@@ -18,6 +18,7 @@ now point your browser at [http://localhost:8080/](http://localhost:8080/) and s
 ## How to
 - Put your app in `./code`
 - Use the `Makefile` with `make` (will display helps)
+- the docker file assumes your app is started with "main:app" so edit this accordingly and rebuild the docker file
 
 ## Want to build it manually?  cool, cool..
 
