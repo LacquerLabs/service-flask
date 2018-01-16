@@ -15,7 +15,7 @@ run: ## run it -v ${PWD}/code:/app/code
 	docker run -p $(PORT_EXTERNAL):$(PORT_INTERNAL) --name $(NAME)_run --rm -id $(NAME)
 
 runvolume: ## run it with code volume attached
-	docker run -p $(PORT_EXTERNAL):$(PORT_INTERNAL) --name $(NAME)_run -v ${PWD}/app:/app --rm -id $(NAME)
+	docker run -p $(PORT_EXTERNAL):$(PORT_INTERNAL) --name $(NAME)_run -v ${PWD}/code:/app --rm -id $(NAME)
 
 runshell: ## run the container with an interactive shell
 	docker run -p $(PORT_EXTERNAL):$(PORT_INTERNAL) --name $(NAME)_run --rm -it $(NAME) /bin/sh

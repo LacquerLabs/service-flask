@@ -28,8 +28,14 @@ RUN pip install gunicorn flask
 
 # Setup the www-data user that nginx will run as
 RUN adduser -u 82 -D -S -G www-data www-data && \
-	mkdir -p /app && \
-	chown -R :www-data /app
+	rm -rf /etc/nginx/conf.d/default.conf && \
+	mkdir -p /run/nginx /app && \
+	chown -R nginx:www-data /run/nginx && \
+	chown -R :www-data /app && \
+	chmod -R g+rw /app
+
+# Add the container config files
+COPY container_configs /
 
 # setup our working directory
 WORKDIR /app
@@ -50,4 +56,5 @@ EXPOSE 80
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]
 
 # what we use to start the container
-CMD ["/bin/sh", "-c", "nginx -g \"daemon off;\""]
+# Gunicorn Bind to 127.0.0.1:9292, 10 workers, reload on code change
+CMD ["/bin/sh", "-c", "nginx -g \"daemon on;\" && gunicorn -b 127.0.0.1:9292 -w 4 --reload main:app"]

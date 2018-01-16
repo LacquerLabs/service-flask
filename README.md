@@ -6,6 +6,15 @@ Quick and dirty nginx/gunicorn/python2 docker image
 - you have make tools
 - you like lists
 
+## Quick start
+* do `make build`  
+You should see the container build up
+* do `make runvolume`
+now point your browser at [http://localhost:8080/](http://localhost:8080/) and see "hello world!"
+* edit the `./code/main.py` and change the `hello` to `bonjour`
+now point your browser at [http://localhost:8080/](http://localhost:8080/) and see "bonjour world!".  It might take a few reloads to reflect code change, this is due to the `-reload` in the `gunicorn` command switches.
+* finally `make kill` to clean it up
+
 ## How to
 - Put your app in `./code`
 - Use the `Makefile` with `make` (will display helps)
