@@ -1,4 +1,5 @@
 FROM alpine:3.6
+LABEL maintainer="Joel Gilley gilleyj@gmail.com"
 
 # Set the timezone
 ENV TIMEZONE=America/New_York
