@@ -1,7 +1,8 @@
 FROM alpine:3.6
 
 # Set the timezone
-ENV TIMEZONE=America/New_York
+# ENV TIMEZONE=America/New_York
+ENV TIMEZONE=UTC
 
 # Load ash profile on launch
 ENV ENV=/etc/profile
@@ -17,13 +18,14 @@ RUN mv /etc/profile.d/color_prompt /etc/profile.d/color_prompt.sh && \
 	echo alias dir=\'ls -alh --color\' >> /etc/profile && \
 	mkdir -p /app /run/nginx
 
-# Install the required services dumb-init.  Also install and fix timezones
+# Install the required services dumb-init.  Also install and fix timezones / ca-certificates 
 # Install nginx, python and pip (git too)
-RUN apk --update --no-cache add dumb-init tzdata \
+RUN apk --update --no-cache add dumb-init tzdata ca-certificates \
 	nginx python py2-pip git && \
 	cp /usr/share/zoneinfo/${TIMEZONE} /etc/localtime && \
 	echo "${TIMEZONE}" > /etc/timezone && \
-	apk del tzdata
+	apk del tzdata && \
+    update-ca-certificates
 
 # install gunicorn and the flask
 RUN pip install gunicorn flask
