@@ -10,7 +10,7 @@ ENV ENV=/etc/profile
 # Create work directory
 RUN mv /etc/profile.d/color_prompt /etc/profile.d/color_prompt.sh && \
 	echo alias dir=\'ls -alh --color\' >> /etc/profile && \
-	mkdir -p /app /run/nginx /run/php7
+	mkdir -p /app /run/nginx
 
 # Install the required services dumb-init.  Also install and fix timezones
 # Install nginx, python and pip (git too)
@@ -29,7 +29,6 @@ RUN pip install gunicorn flask
 # Setup the www-data user that nginx will run as
 RUN adduser -u 82 -D -S -G www-data www-data && \
 	rm -rf /etc/nginx/conf.d/default.conf && \
-	mkdir -p /run/nginx /app && \
 	chown -R nginx:www-data /run/nginx && \
 	chown -R :www-data /app && \
 	chmod -R g+rw /app
