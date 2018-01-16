@@ -34,9 +34,9 @@ watchlog: ## connect to it
 kill: ## kill it
 	docker kill $(NAME)_run
 
-release: tag ## Create and push release to docker hub
+release: tag ## Create and push release to docker hub manually
 	@if ! docker images $(IMAGE) | awk '{ print $$2 }' | grep -q -F $(VERSION); then echo "$(NAME) version $(VERSION) is not yet built. Please run 'make build'"; false; fi
-	docker push $(IMAGE)
+	docker push $(IMAGE):$(VERSION)
 	@echo "*** Don't forget to create a tag. git tag rel-$(VERSION) && git push origin rel-$(VERSION)"
 
 .PHONY: help
