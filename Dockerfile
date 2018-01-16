@@ -16,16 +16,16 @@ ENV ENV=/etc/profile
 # Setup ash profile prompt and my old man alias
 # Create work directory
 RUN mv /etc/profile.d/color_prompt /etc/profile.d/color_prompt.sh && \
-	echo alias dir=\'ls -alh --color\' >> /etc/profile && \
-	mkdir -p /app /run/nginx
+    echo alias dir=\'ls -alh --color\' >> /etc/profile && \
+    mkdir -p /app /run/nginx
 
 # Install the required services dumb-init.  Also install and fix timezones / ca-certificates 
 # Install nginx, python and pip (git too)
 RUN apk --update --no-cache add dumb-init tzdata ca-certificates \
-	nginx python py2-pip git && \
-	cp /usr/share/zoneinfo/${TIMEZONE} /etc/localtime && \
-	echo "${TIMEZONE}" > /etc/timezone && \
-	apk del tzdata && \
+    nginx python py2-pip git && \
+    cp /usr/share/zoneinfo/${TIMEZONE} /etc/localtime && \
+    echo "${TIMEZONE}" > /etc/timezone && \
+    apk del tzdata && \
     update-ca-certificates
 
 # install gunicorn and the flask
@@ -36,10 +36,10 @@ RUN pip install gunicorn flask
 
 # Setup the www-data user that nginx will run as
 RUN adduser -u 82 -D -S -G www-data www-data && \
-	rm -rf /etc/nginx/conf.d/default.conf && \
-	chown -R nginx:www-data /run/nginx && \
-	chown -R :www-data /app && \
-	chmod -R g+rw /app
+    rm -rf /etc/nginx/conf.d/default.conf && \
+    chown -R nginx:www-data /run/nginx && \
+    chown -R :www-data /app && \
+    chmod -R g+rw /app
 
 # Add the container config files
 COPY container_configs /
