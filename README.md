@@ -1,16 +1,29 @@
-# cx2-webapp
-Quick and dirty Alpine/Nginx/PHP7fpm server and pages for my cx2 skeleton project
+# service-flask
+Quick and dirty nginx/gunicorn/python docker image
 
-Want to docker build it manually?  cool..
+## How to
+- Put your app in `./code`
+- Use the Makefile with `make` (will display helps)
+
+## Want to build it manually?  cool, cool..
 
 **build it**
-`docker build -t webapp .`
+`docker build --pull -t flaskapp .`
 
-**run it**
-`docker run --name webapp_test --rm -id webapp`
+**run it on port 80**
+`docker run -p 80:80 --name flaskapp_run --rm -id flaskapp`
 
-**connect to it**
-`docker exec -it webapp_test /bin/sh`
+**run it on port 80, but also mount the ./code directory so you can make live edits**
+`docker run -p 80:80 --name flaskapp_run -v ${PWD}/code:/app --rm -id flaskapp`
+You'll have to rebuild the docker image after you're done making changes if you want the image to have your new codebase.
+
+**connect to it while it's running**
+`docker exec -it flaskapp_run /bin/sh`
+
+**watch the pretty logs**
+`docker logs -f flaskapp_run`
 
 **kill it**
-`docker kill webapp_test`
+`docker kill flaskapp_run`
+
+There are other options in the Makefile too.  So really, use that.
