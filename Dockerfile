@@ -4,7 +4,7 @@ FROM alpine:3.6
 ENV TIMEZONE=America/New_York
 
 # Load ash profile on launch
-ENV ENV="/etc/profile"
+ENV ENV=/etc/profile
 
 # Setup ash profile prompt and my old man alias
 # Create work directory
