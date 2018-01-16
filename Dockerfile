@@ -6,6 +6,11 @@ ENV TIMEZONE=America/New_York
 # Load ash profile on launch
 ENV ENV=/etc/profile
 
+# NOTE: We *COULD* compress down these next 4 RUN
+# statements to just ONE but for clarity, readability
+# and such, I am breaking things into distinctive steps 
+# here so this container can be used as a learning toy
+
 # Setup ash profile prompt and my old man alias
 # Create work directory
 RUN mv /etc/profile.d/color_prompt /etc/profile.d/color_prompt.sh && \
