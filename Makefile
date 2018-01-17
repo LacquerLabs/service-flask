@@ -4,8 +4,8 @@ ORG = lacquerlabs
 NAME = service-flask
 IMAGE = $(ORG)/$(NAME)
 VERSION = 2.0.0
-PORT_INT = 80
-PORT_EXT = 8080
+PORT_INTERNAL = 80
+PORT_EXTERNAL = 8080
 
 build: ## Build it
 	docker build --pull -t $(IMAGE) .
