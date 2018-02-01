@@ -1,5 +1,5 @@
-FROM alpine:3.6
-LABEL maintainer="Joel Gilley gilleyj@gmail.com"
+FROM alpine:3.7
+LABEL maintainer="Joelle Gilley gilley.joelle@gmail.com"
 
 # Set the timezone
 # ENV TIMEZONE=America/New_York
@@ -10,7 +10,7 @@ ENV ENV=/etc/profile
 
 # NOTE: We *COULD* compress down these next 4 RUN
 # statements to just ONE but for clarity, readability
-# and such, I am breaking things into distinctive steps 
+# and such, I am breaking things into distinctive steps
 # here so this container can be used as a learning toy
 
 # Setup ash profile prompt and my old man alias
@@ -19,7 +19,7 @@ RUN mv /etc/profile.d/color_prompt /etc/profile.d/color_prompt.sh && \
     echo alias dir=\'ls -alh --color\' >> /etc/profile && \
     mkdir -p /app /run/nginx
 
-# Install the required services dumb-init.  Also install and fix timezones / ca-certificates 
+# Install the required services dumb-init.  Also install and fix timezones / ca-certificates
 # Install nginx, python and pip (git too)
 RUN apk --update --no-cache add dumb-init tzdata ca-certificates \
     nginx python py2-pip git && \

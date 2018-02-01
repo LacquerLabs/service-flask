@@ -1,5 +1,5 @@
 # service-flask
-Quick and dirty nginx => gunicorn => python2/flask docker image based on alpine 3.6
+Quick and dirty nginx => gunicorn => python2/flask docker image based on alpine 3.7
 
 ## Assumptions
 - you have docker installed
@@ -7,7 +7,7 @@ Quick and dirty nginx => gunicorn => python2/flask docker image based on alpine 
 - you like lists
 
 ## Quick start
-* do `make build`  
+* do `make build`
 You should see the container build up
 * do `make runvolume`
 now point your browser at [http://localhost:8080/](http://localhost:8080/) and see "hello world!"
@@ -22,23 +22,23 @@ now point your browser at [http://localhost:8080/](http://localhost:8080/) and s
 
 ## Want to build it manually?  cool, cool..
 
-- **build it**  
+- **build it**
 `docker build --pull -t flaskapp .`
 
-- **run it on port 80**  
+- **run it on port 80**
 `docker run -p 80:80 --name flaskapp_run --rm -id flaskapp`
 
-- **run it on port 80, but also mount the ./code directory so you can make live edits**  
-`docker run -p 80:80 --name flaskapp_run -v ${PWD}/code:/app --rm -id flaskapp`  
+- **run it on port 80, but also mount the ./code directory so you can make live edits**
+`docker run -p 80:80 --name flaskapp_run -v ${PWD}/code:/app --rm -id flaskapp`
 **NOTE**: *You'll have to rebuild the docker image after you're done making changes if you want the image to have your new codebase.*
 
-- **connect to it while it's running**  
+- **connect to it while it's running**
 `docker exec -it flaskapp_run /bin/sh`
 
-- **watch the pretty logs**  
+- **watch the pretty logs**
 `docker logs -f flaskapp_run`
 
-- **kill it**  
+- **kill it**
 `docker kill flaskapp_run`
 
 There are other options in the `Makefile` too, so really, use that.
